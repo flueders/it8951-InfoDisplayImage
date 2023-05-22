@@ -1,0 +1,23 @@
+{
+    "name": "fabia/it8951-info-display-image",
+    "description": "Generates a image which can be used for display on a e-ink display, for example WaveShare it8951",
+    "type": "project",
+    "require": {
+        "cmfcmf/openweathermap-php-api": "^3.3",
+        "knplabs/knp-snappy": "^1.4",
+        "h4cc/wkhtmltoimage-amd64": "^0.12.4",
+        "symfony/dotenv": "^6.2"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Fabia\\It8951InfoDisplayImage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fabian Lüders",
+            "email": "info@fabian-lueders.eu"
+        }
+    ]
+}
