@@ -6,7 +6,9 @@
         "cmfcmf/openweathermap-php-api": "^3.3",
         "knplabs/knp-snappy": "^1.4",
         "h4cc/wkhtmltoimage-amd64": "^0.12.4",
-        "symfony/dotenv": "^6.2"
+        "symfony/dotenv": "^6.2",
+        "php-http/guzzle7-adapter": "^1.0",
+        "http-interop/http-factory-guzzle": "^1.2"
     },
     "license": "MIT",
     "autoload": {
