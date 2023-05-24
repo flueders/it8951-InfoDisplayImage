@@ -13,7 +13,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Fabia\\It8951InfoDisplayImage\\": "src/"
+            "It8951InfoDisplayImage\\": "src/"
         }
     },
     "authors": [
