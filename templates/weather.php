@@ -1,21 +1,21 @@
 <div id="weather">
     <div id="currentWeather">
-        <?= $this->weatherForecast->getCurrentWeatherIcon() ?>
+        <?= $currentWeatherSVG ?>
         <div class="weatherTextbox">
             <i class="fa-solid fa-temperature-three-quarters"></i>
-            <?= $this->weatherForecast->currentWeather->temperature->now ?>
-            <?= $this->weatherForecast->currentWeather->lastUpdate->format("G:i") . " Uhr" ?>
+            <?= $this->e($currentTemperature)?>
+            <?= $this->e($lastUpdate)  ?>
 
         </div>
         <div class="weatherTextbox">
             <i class="fa-solid fa-droplet"></i>
-            <?= $this->weatherForecast->currentWeather->precipitation ?>
+            <?= $this->e($precipitation) ?>
         </div>
     </div>
     <div id="upcomingWeather">
-        <?= $this->weatherForecast->getTodaysWeatherIcon() ?>
+        <?= $forecastWeatherSVG ?>
         <div class="weatherTextbox">
-            <?= $this->weatherForecast->selectedForecast->time->from->format("G") . " Uhr" ?>
+            <?= $this->e($forecastTime) ?>
         </div>
     </div>
 </div>
