@@ -14,7 +14,7 @@ use Http\Factory\Guzzle\RequestFactory;
 use Psr\Http\Message\RequestFactoryInterface;
 
 
-class WeatherForecastWidget
+class WeatherForecastWidget implements Widget
 {
     private OpenWeatherMap $owm;
     private RequestFactoryInterface $httpRequestFactory;
