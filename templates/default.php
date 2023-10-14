@@ -16,22 +16,9 @@
     <h1>
         <?= date($_ENV['DATE_FORMAT']) ?>
     </h1>
-    <div id="weather">
-        <div id="currentWeather">
-            <?= $this->weatherForeCast->getCurrentWeatherIcon() ?>
-            <div class="weatherTextbox">
-                <i class="fa-solid fa-temperature-three-quarters"></i>
-                <?= $this->weatherForeCast->currentWeather->temperature->now ?>
-            </div>
-            <div class="weatherTextbox">
-                <i class="fa-solid fa-droplet"></i>
-                <?= $this->weatherForeCast->currentWeather->precipitation ?>
-            </div>
-        </div>
-        <div id="upcomingWeather">
-            <?= $this->weatherForeCast->getTodaysWeatherIcon() ?>
-        </div>
-    </div>
+
+    <?php include(__DIR__ . "/weather.php") ?>
+
 </body>
 
 </html>
