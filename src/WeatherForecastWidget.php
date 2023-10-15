@@ -34,10 +34,16 @@ class WeatherForecastWidget implements Widget
     public function __construct()
     {
         $this->httpRequestFactory = new RequestFactory();
-        $this->httpClient = Client::createWithConfig(['verify' => false]);
-        $this->owm = new OpenWeatherMap($_ENV['OPEN_WHEATER_API_KEY'], $this->httpClient, $this->httpRequestFactory);
-        $this->currentWeather = $this->owm->getWeather($_ENV['CITY'], $_ENV['UNITS'], $_ENV['LANG']);
-        $this->weatherForecasts = $this->owm->getWeatherForecast($_ENV['CITY'], $_ENV['UNITS'], $_ENV['LANG'], '', 1);
+        $this->httpClient = Client::createWithConfig(['verify' => false, 'timeout' => 5]);
+        try {
+            $this->owm = new OpenWeatherMap($_ENV['OPEN_WHEATER_API_KEY'], $this->httpClient, $this->httpRequestFactory);
+            $this->currentWeather = $this->owm->getWeather($_ENV['CITY'], $_ENV['UNITS'], $_ENV['LANG']);
+            $this->weatherForecasts = $this->owm->getWeatherForecast($_ENV['CITY'], $_ENV['UNITS'], $_ENV['LANG'], '', 1);
+        } catch (OpenWeatherMap\Exception $e) {
+            echo $e->getMessage();
+            die();
+        }
+
         $this->selectForecastFromList();
 
         $this->widgetVariables["currentTemperature"] = $this->currentWeather->temperature->now;
@@ -48,7 +54,6 @@ class WeatherForecastWidget implements Widget
         $this->widgetVariables["forecastWeatherSVG"] = $this->getForecastWeatherIcon();
 
         $this->widgetVariables["forecastTime"] = $this->selectedForecast->time->from->format("G") . " Uhr";
-
     }
 
     private function getCurrentWeatherIcon(): string

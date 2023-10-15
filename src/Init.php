@@ -7,9 +7,11 @@ use League\Plates\Engine;
 
 class Init
 {
-    private WeatherForecastWidget $weatherForecast;
     private Engine $templates;
     private Dotenv $dotenv;
+
+    /** @var Widget[] $widgets  */
+    private array $widgets;
 
     function __construct()
     {
@@ -18,12 +20,37 @@ class Init
 
         $this->templates = new Engine(__DIR__ . '/../templates');
 
-        $this->weatherForecast = new WeatherForecastWidget();
-        $this->print();
+        $this->widgets[] = new WeatherForecastWidget();
     }
 
-    private function print()
+    public function print()
     {
-        echo $this->templates->render('default', $this->weatherForecast->widgetVariables);
+        $templateVars = [];
+
+        foreach ($this->widgets as $widget) {
+            $templateVars = array_merge($templateVars, $widget->widgetVariables);
+        }
+
+        echo $this->templates->render('default', $templateVars);
+    }
+
+    public function generateImage()
+    {
+
+        $requestUrl =  (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $requestUrl = str_replace("image.php", "index.php", $requestUrl);
+
+        $outputFile = __DIR__. "/../tmp/output.bmp";
+
+        $command = "wkhtmltoimage $requestUrl $outputFile";
+        exec($command);
+
+
+        $fp = fopen($outputFile, 'rb');
+
+        header("Content-Type: image/bmp");
+        header("Content-Length: " . filesize($outputFile));
+        fpassthru($fp);
+        fclose($fp);
     }
 }
