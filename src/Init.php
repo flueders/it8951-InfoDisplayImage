@@ -19,8 +19,8 @@ class Init
         $this->dotenv = new Dotenv();
         $this->dotenv->load(__DIR__ . '/../.env');
 
-        $this->$widgets[] = new It8951InfoDisplayImage\Widgets\WeatherForecastWidget();
-        $this->templates = new Engine(__DIR__ . '/../templates');
+        $this->widgets[] = new Widgets\WeatherForecastWidget();
+        $this->templates = new Engine(__DIR__ . '/../templates', "svg.tpl");
     }
 
     public function print()
@@ -31,7 +31,7 @@ class Init
             $templateVars = array_merge($templateVars, $widget->widgetVariables);
         }
 
-        return $this->templates->render('default', $templateVars);
+        echo $this->templates->render('default', $templateVars);
     }
 
     public function generateImage()

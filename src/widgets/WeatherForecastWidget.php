@@ -14,7 +14,7 @@ use Http\Factory\Guzzle\RequestFactory;
 use Psr\Http\Message\RequestFactoryInterface;
 
 
-class WeatherForecastWidget implements Widget
+class WeatherForecastWidget implements \It8951InfoDisplayImage\Widget
 {
     private OpenWeatherMap $owm;
     private RequestFactoryInterface $httpRequestFactory;
@@ -47,19 +47,13 @@ class WeatherForecastWidget implements Widget
         $this->selectForecastFromList();
 
         $this->widgetVariables["currentTemperature"] = $this->currentWeather->temperature->now;
-        $this->widgetVariables["lastUpdate"] = $this->currentWeather->lastUpdate->format("G:i") . " Uhr";
+        $this->widgetVariables["lastUpdate"] = $this->currentWeather->lastUpdate->format("G:i");
         $this->widgetVariables["precipitation"] = $this->currentWeather->precipitation . "%";
 
-        $this->widgetVariables["currentWeatherSVG"] = $this->getCurrentWeatherIcon();
-        $this->widgetVariables["forecastWeatherSVG"] = $this->getForecastWeatherIcon();
+        $this->widgetVariables["currentWeatherSVG"] = "weatherIcons/" . $this->selectedForecast->weather->icon;
+        $this->widgetVariables["forecastWeatherSVG"] = "weatherIcons/" .$this->currentWeather->weather->icon;
 
-        $this->widgetVariables["forecastTime"] = $this->selectedForecast->time->from->format("G") . " Uhr";
-    }
-
-    private function getCurrentWeatherIcon(): string
-    {
-        $svgFile = file_get_contents(self::ICON_PATH . $this->currentWeather->weather->icon . '.svg');
-        return $svgFile;
+        $this->widgetVariables["forecastTime"] = $this->selectedForecast->time->from->format("G");
     }
 
     private function selectForecastFromList(): ?Forecast
@@ -71,9 +65,4 @@ class WeatherForecastWidget implements Widget
         }
     }
 
-    private function getForecastWeatherIcon(): string
-    {
-        $svgFile = file_get_contents(self::ICON_PATH . $this->selectedForecast->weather->icon . '.svg');
-        return $svgFile;
-    }
 }
