@@ -23,7 +23,16 @@ class Init
         $this->templates = new Engine(__DIR__ . '/../templates', "svg.tpl");
     }
 
-    public function print()
+    public function generateImage()
+    {
+        header("Content-Type: image/bmp");
+        $imagick = new \Imagick();
+        $imagick->readImageBlob($this->generateSVG());
+        $imagick->setImageFormat('bmp');
+        echo $imagick->getImagesBlob();
+    }
+    
+    private function generateSVG(): string
     {
         $templateVars = [];
 
@@ -31,15 +40,7 @@ class Init
             $templateVars = array_merge($templateVars, $widget->widgetVariables);
         }
 
-        echo $this->templates->render('default', $templateVars);
+        return $this->templates->render('default', $templateVars);
     }
 
-    public function generateImage()
-    {
-        $imagick = new \Imagick();
-        $imagick->readImageBlob($this->print());
-        $imagick->setImageFormat('bmp');
-        $imagick->writeImage('img.bmp');
-        $imagick->destroy();
-    }
 }
