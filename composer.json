@@ -1,15 +1,15 @@
 {
-    "name": "fabia/it8951-info-display-image",
+    "name": "fabian/it8951-info-display-image",
     "description": "Generates a image which can be used for display on a e-ink display, for example WaveShare it8951",
     "type": "project",
     "require": {
         "cmfcmf/openweathermap-php-api": "^3.3",
-        "knplabs/knp-snappy": "^1.4",
-        "h4cc/wkhtmltoimage-amd64": "^0.12.4",
         "symfony/dotenv": "^6.2",
         "php-http/guzzle7-adapter": "^1.0",
         "http-interop/http-factory-guzzle": "^1.2",
-        "league/plates": "^3.5"
+        "league/plates": "^3.5",
+        "ext-imagick": "*",
+        "ext-sockets": "*"
     },
     "license": "MIT",
     "autoload": {
