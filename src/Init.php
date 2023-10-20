@@ -12,15 +12,15 @@ class Init
 
     /** @var Widget[] $widgets  */
     private array $widgets;
+    
 
     function __construct()
     {
         $this->dotenv = new Dotenv();
         $this->dotenv->load(__DIR__ . '/../.env');
 
+        $this->$widgets[] = new It8951InfoDisplayImage\Widgets\WeatherForecastWidget();
         $this->templates = new Engine(__DIR__ . '/../templates');
-
-        $this->widgets[] = new WeatherForecastWidget();
     }
 
     public function print()
@@ -31,26 +31,15 @@ class Init
             $templateVars = array_merge($templateVars, $widget->widgetVariables);
         }
 
-        echo $this->templates->render('default', $templateVars);
+        return $this->templates->render('default', $templateVars);
     }
 
     public function generateImage()
     {
-
-        $requestUrl =  (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $requestUrl = str_replace("image.php", "index.php", $requestUrl);
-
-        $outputFile = __DIR__. "/../tmp/output.bmp";
-
-        $command = "wkhtmltoimage $requestUrl $outputFile";
-        exec($command);
-
-
-        $fp = fopen($outputFile, 'rb');
-
-        header("Content-Type: image/bmp");
-        header("Content-Length: " . filesize($outputFile));
-        fpassthru($fp);
-        fclose($fp);
+        $imagick = new \Imagick();
+        $imagick->readImageBlob($this->print());
+        $imagick->setImageFormat('bmp');
+        $imagick->writeImage('img.bmp');
+        $imagick->destroy();
     }
 }

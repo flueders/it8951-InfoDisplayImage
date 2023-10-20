@@ -1,6 +1,6 @@
 <?php
 
-namespace It8951InfoDisplayImage;
+namespace It8951InfoDisplayImage\Widgets;
 
 use DateTime;
 
@@ -39,7 +39,7 @@ class WeatherForecastWidget implements Widget
             $this->owm = new OpenWeatherMap($_ENV['OPEN_WHEATER_API_KEY'], $this->httpClient, $this->httpRequestFactory);
             $this->currentWeather = $this->owm->getWeather($_ENV['CITY'], $_ENV['UNITS'], $_ENV['LANG']);
             $this->weatherForecasts = $this->owm->getWeatherForecast($_ENV['CITY'], $_ENV['UNITS'], $_ENV['LANG'], '', 1);
-        } catch (OpenWeatherMap\Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
             die();
         }
